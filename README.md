@@ -92,7 +92,7 @@ pnpm run ios
 
 ### 5. Initialize the AI Engine
 1. Open the app on your physical device.
-2. Tap **[ INITIALIZE SECURE CORE ]** on the setup screen.
+2. Tap **[ Select Model File ]** on the setup screen.
 3. Select the `.litertlm` model file you downloaded to your device in Step 1.
 4. The app will securely copy the model into its local application document sandbox (`FileSystem.documentDirectory`) and boot the native engine.
 
