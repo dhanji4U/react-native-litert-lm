@@ -55,3 +55,10 @@ example
 .agents/
 ORIGINAL_REQUEST.md
 .codex-remote-attachments/
+AGENTS.md
+CLAUDE.md
+antigravity.md
+.claude/
+
+# IDE / Editor configurations
+.vscode/
