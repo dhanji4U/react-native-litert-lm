@@ -88,27 +88,21 @@ export default function ChatComposer({
 
           {/* Action Button Container (Right) */}
           <View style={{ alignSelf: 'flex-end', marginBottom: 4 }}>
-            {/* {inputText.trim() || isGenerating ? ( */}
-              <Pressable
-                onPress={isGenerating ? onStop : (inputText.trim() ? onSend : undefined)}
-                className="w-10 h-10 rounded-full items-center justify-center bg-primary"
-                style={{
-                  elevation: 2
-                }}
-              >
-                {isGenerating ? (
-                  <Ionicons name="stop" size={16} color={colorScheme === 'dark' ? '#000000' : '#ffffff'} />
-                ) : (
-                  <Feather name="arrow-up" size={22} color={colorScheme === 'dark' ? '#000000' : '#ffffff'} />
-                )}
-              </Pressable>
-            {/* ) : (
-              <Pressable
-                className="w-10 h-10 rounded-full items-center justify-center"
-              >
-                <Ionicons name="mic-outline" size={22} color={textColor} style={{ opacity: 0.7 }} />
-              </Pressable>
-            )} */}
+            <Pressable
+              disabled={!isGenerating && !inputText.trim()}
+              onPress={isGenerating ? onStop : onSend}
+              className="w-10 h-10 rounded-full items-center justify-center bg-primary"
+              style={{
+                elevation: isGenerating || inputText.trim() ? 2 : 0,
+                opacity: isGenerating || inputText.trim() ? 1 : 0.4
+              }}
+            >
+              {isGenerating ? (
+                <Ionicons name="stop" size={16} color={colorScheme === 'dark' ? '#000000' : '#ffffff'} />
+              ) : (
+                <Feather name="arrow-up" size={22} color={colorScheme === 'dark' ? '#000000' : '#ffffff'} />
+              )}
+            </Pressable>
           </View>
         </View>
       </View>

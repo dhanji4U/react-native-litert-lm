@@ -10,7 +10,7 @@ import {
   type NativeScrollEvent,
   type NativeSyntheticEvent,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated';
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller';
 import { Feather } from '@expo/vector-icons';
@@ -27,12 +27,11 @@ const AUTO_SCROLL_THRESHOLD = 72;
 const COMPOSER_OPEN_PADDING = 16;
 
 export default function IndexScreen() {
-  const insets = useSafeAreaInsets();
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
 
   // Increased padding to separate from the system navigation bar
-  const closedComposerPadding = insets.bottom + 16;
+  const closedComposerPadding = 16;
   const { height: keyboardHeight, progress: keyboardProgress } = useReanimatedKeyboardAnimation();
 
   const [sessions, setSessions] = useState<ChatSession[]>([]);
@@ -395,7 +394,7 @@ export default function IndexScreen() {
   };
 
   return (
-    <View className="flex-1 bg-background" style={{ paddingTop: insets.top }}>
+    <SafeAreaView className="flex-1 bg-background" edges={['top', 'bottom']}>
 
       {/* HEADER */}
       <ChatHeader onMenuPress={() => setIsDrawerOpen(true)} onNewChatPress={handleNewChat} />
@@ -408,41 +407,6 @@ export default function IndexScreen() {
           </TouchableOpacity>
         </View>
       ) : null}
-
-      <HistoryDrawer
-        visible={isDrawerOpen}
-        onOpen={() => setIsDrawerOpen(true)}
-        onClose={() => setIsDrawerOpen(false)}
-        sessions={sessions}
-        currentSessionId={currentSessionId}
-        onSelectSession={(id) => setCurrentSessionId(id)}
-        onNewChat={handleNewChat}
-        onRenameSession={(session) => {
-          setSelectedMenuSession(session);
-          setRenameText(session.title || '');
-          setIsRenameModalVisible(true);
-        }}
-        onDeleteSession={(session) => {
-          setSelectedMenuSession(session);
-          setIsDeleteModalVisible(true);
-        }}
-      />
-
-      {/* SESSION MANAGEMENT UI */}
-      <RenameModal
-        visible={isRenameModalVisible}
-        onClose={() => setIsRenameModalVisible(false)}
-        renameText={renameText}
-        setRenameText={setRenameText}
-        onSave={handleRenameSession}
-      />
-
-      <DeleteModal
-        visible={isDeleteModalVisible}
-        onClose={() => setIsDeleteModalVisible(false)}
-        sessionTitle={selectedMenuSession?.title}
-        onDelete={handleDeleteSession}
-      />
 
       <View className="flex-1">
         {messages.length === 0 ? (
@@ -524,6 +488,41 @@ export default function IndexScreen() {
           animatedStyle={composerAnimatedStyle}
         />
       </View>
-    </View>
+
+      <HistoryDrawer
+        visible={isDrawerOpen}
+        onOpen={() => setIsDrawerOpen(true)}
+        onClose={() => setIsDrawerOpen(false)}
+        sessions={sessions}
+        currentSessionId={currentSessionId}
+        onSelectSession={(id) => setCurrentSessionId(id)}
+        onNewChat={handleNewChat}
+        onRenameSession={(session) => {
+          setSelectedMenuSession(session);
+          setRenameText(session.title || '');
+          setIsRenameModalVisible(true);
+        }}
+        onDeleteSession={(session) => {
+          setSelectedMenuSession(session);
+          setIsDeleteModalVisible(true);
+        }}
+      />
+
+      {/* SESSION MANAGEMENT UI */}
+      <RenameModal
+        visible={isRenameModalVisible}
+        onClose={() => setIsRenameModalVisible(false)}
+        renameText={renameText}
+        setRenameText={setRenameText}
+        onSave={handleRenameSession}
+      />
+
+      <DeleteModal
+        visible={isDeleteModalVisible}
+        onClose={() => setIsDeleteModalVisible(false)}
+        sessionTitle={selectedMenuSession?.title}
+        onDelete={handleDeleteSession}
+      />
+    </SafeAreaView>
   );
 }

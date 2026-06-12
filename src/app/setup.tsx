@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system/legacy';
 import { useRouter } from 'expo-router';
@@ -54,8 +55,9 @@ export default function SetupScreen() {
   };
 
   return (
-    <View className="flex-1 bg-background items-center justify-center p-8">
-      <View className="w-full max-w-sm items-center">
+    <SafeAreaView className="flex-1 bg-background" edges={['top', 'bottom']}>
+      <View className="flex-1 items-center justify-center p-8">
+        <View className="w-full max-w-sm items-center">
         <View className="w-16 h-16 rounded-full bg-muted items-center justify-center mb-6 shadow-sm">
            <Feather name="cpu" size={32} className="color-foreground" />
         </View>
@@ -87,6 +89,7 @@ export default function SetupScreen() {
           {statusText}
         </Text>
       </View>
-    </View>
+      </View>
+    </SafeAreaView>
   );
 }

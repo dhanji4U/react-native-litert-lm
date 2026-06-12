@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/immutability */
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Pressable, useColorScheme, Dimensions, StyleSheet } from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, runOnJS, withSpring } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { ChatSession } from '../services/Database';
@@ -37,7 +37,6 @@ export default function HistoryDrawer({
   const colorScheme = useColorScheme();
   const iconColor = colorScheme === 'dark' ? '#ffffff' : '#000000';
   const mutedIconColor = colorScheme === 'dark' ? '#a1a1aa' : '#71717a';
-  const insets = useSafeAreaInsets();
 
   const screenWidth = Dimensions.get('window').width;
   // Make drawer take up 85% of screen width
@@ -111,7 +110,7 @@ export default function HistoryDrawer({
       <Animated.View 
         style={[
           StyleSheet.absoluteFill,
-          { top: -insets.top, zIndex: 100, elevation: 100 },
+          { zIndex: 100, elevation: 100 },
         ]}
         pointerEvents={showModal ? 'auto' : 'box-none'}
       >

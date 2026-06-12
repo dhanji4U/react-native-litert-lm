@@ -57,7 +57,7 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <KeyboardProvider>
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <StatusBar style="light" />
+          <StatusBar style="auto" />
           <AnimatedSplashOverlay />
           <Stack screenOptions={{ headerShown: false }} />
         </ThemeProvider>
